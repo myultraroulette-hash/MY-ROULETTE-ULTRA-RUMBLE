@@ -1,6 +1,6 @@
 # My Roulette Ultra Rumble
 
-Fan-Made Randomizador for My Hero Ultra Rumble
+Fan-Made Randomizer for My Hero Ultra Rumble
 
 https://myultraroulette-hash.github.io/
 
