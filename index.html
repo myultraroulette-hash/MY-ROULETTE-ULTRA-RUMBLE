@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,9 +45,18 @@ a { color: var(--muted); }
 .wrap { min-height: 100dvh; overflow-x: hidden; }
 .hero {
   display: flex; flex-direction: column; align-items: center;
-  min-height: 100dvh; padding: 1.5rem 0.75rem 0.75rem;
+  min-height: 100dvh; padding: 1rem 0.75rem 0.75rem;
 }
-@media (min-width: 640px) { .hero { padding: 2rem 1.25rem 0.75rem; } }
+@media (min-width: 640px) { .hero { padding: 1.5rem 1.25rem 0.75rem; } }
+.lang-bar {
+  width: 100%; max-width: 1280px; display: flex; justify-content: flex-end; margin-bottom: 0.35rem;
+}
+.lang-select {
+  height: 2rem; border-radius: 0.4rem; border: 1px solid var(--border);
+  background: var(--panel-3); color: var(--fg); font-family: inherit;
+  font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; padding: 0 0.5rem; cursor: pointer;
+}
+.lang-select:focus { outline: none; border-color: var(--red); }
 h1.title {
   margin: 0 0 0.75rem;
   font-size: clamp(1.85rem, 6vw, 4.4rem);
@@ -400,6 +409,127 @@ h1.title {
   const COST_KEY = "mhur-disabled-costumes";
   const STYLE_KEY = "mhur-disabled-styles";
   const HIST_KEY = "mhur-roll-history";
+  const LANG_KEY = "mrur-locale";
+  const COPY = {
+    en: {
+      langLabel: "Language",
+      clearRoleFilters: "Clear role filters",
+      rolling: "ROLLING...",
+      randomCharacter: "RANDOM CHARACTER",
+      pickCharacter: "Choose character",
+      searchCharacter: "Search character...",
+      noResults: "No results",
+      combatStyles: "COMBAT STYLES",
+      poolCaption: "{enabled}/{total} combat styles",
+      poolCaptionFilter: "{pool} in pool · {enabled}/{total} enabled",
+      bulkAll: "All",
+      bulkOriginals: "Originals",
+      bulkQuirks: "Quirk sets",
+      bulkCurrent: "Current only",
+      searchStyle: "Search style or quirk set...",
+      quirkSet: "Quirk set",
+      loadoutHint: "LOADOUT",
+      randomLoadout: "RANDOM LOADOUT",
+      skills: "QUIRKS",
+      randomSkills: "Random αβγ",
+      costume: "COSTUME",
+      randomCostume: "Random costume",
+      rollCharacterForCostume: "Roll a character to assign a costume.",
+      tuning: "T.U.N.I.N.G.",
+      randomTuning: "Random tuning",
+      rollCostumeForTuning: "Roll a costume to assign unique skills.",
+      unconfigured: "Not set",
+      lvHeroes: "Lv. 1 · HEROES",
+      lvVillains: "Lv. 1 · VILLAINS",
+      lvPlain: "Lv. 1",
+      challenge: "CHALLENGE",
+      randomChallenge: "Random K.O. + damage",
+      koTarget: "K.O. TARGET",
+      minDamage: "MIN DAMAGE",
+      koHint: "KOs to get · 1–12",
+      dmgHint: "Damage to deal · 0–15,000",
+      collection: "COSTUME COLLECTION",
+      collectionHint: "Check only the cosmetics you own. The randomizer will not roll disabled costumes.",
+      enabledCount: "{enabled}/{total} enabled",
+      searchCostume: "Search costume...",
+      enableAll: "Enable all",
+      disableAll: "Disable all",
+      defaultsOnly: "Defaults only",
+      selectCostume: "Select Costume",
+      history: "HISTORY",
+      historyHint: "Last 3 rolls",
+      latest: "LATEST",
+      empty: "Empty",
+      noRoll: "No roll",
+      bannerDb: "My Hero Ultra Rumble Database — ultrarumble.com",
+      bannerYt: "Spider-Cris on YouTube",
+      footer1: 'This site is a fan project by "Spider-Cris"',
+      footer2: "It is not affiliated, associated, authorized, or endorsed by ultrarumble.com | Byking Inc. and/or Bandai Namco Entertainment Inc.",
+      footer3: "My Hero Ultra Rumble and all related characters, artwork, and trademarks are the property of their respective owners. Data and images are shown for informational and personal use only. Reference database: ultrarumble.com.",
+    },
+    es: {
+      langLabel: "Idioma",
+      clearRoleFilters: "Quitar filtros de rol",
+      rolling: "ROLLING...",
+      randomCharacter: "RANDOM CHARACTER",
+      pickCharacter: "Elegir personaje",
+      searchCharacter: "Buscar personaje...",
+      noResults: "Sin resultados",
+      combatStyles: "ESTILOS DE COMBATE",
+      poolCaption: "{enabled}/{total} estilos de combate",
+      poolCaptionFilter: "{pool} en pool · {enabled}/{total} activos",
+      bulkAll: "Todos",
+      bulkOriginals: "Originales",
+      bulkQuirks: "Quirk sets",
+      bulkCurrent: "Solo actual",
+      searchStyle: "Buscar estilo o quirk set...",
+      quirkSet: "Quirk set",
+      loadoutHint: "LOADOUT",
+      randomLoadout: "RANDOM LOADOUT",
+      skills: "QUIRKS",
+      randomSkills: "Random αβγ",
+      costume: "TRAJE",
+      randomCostume: "Random traje",
+      rollCharacterForCostume: "Sortea un personaje para asignar traje.",
+      tuning: "T.U.N.I.N.G.",
+      randomTuning: "Random tuning",
+      rollCostumeForTuning: "Sortea un traje para asignar unique skills.",
+      unconfigured: "Sin configurar",
+      lvHeroes: "Nv. 1 · HÉROES",
+      lvVillains: "Nv. 1 · VILLANOS",
+      lvPlain: "Nv. 1",
+      challenge: "DESAFÍO",
+      randomChallenge: "Random K.O. + daño",
+      koTarget: "K.O. OBJETIVO",
+      minDamage: "DAÑO MÍNIMO",
+      koHint: "Bajas a conseguir · 1–12",
+      dmgHint: "Daño a infligir · 0–15,000",
+      collection: "COLECCIÓN DE TRAJES",
+      collectionHint: "Marca solo los cosméticos que tienes. El randomizer no sorteará trajes desactivados.",
+      enabledCount: "{enabled}/{total} activos",
+      searchCostume: "Buscar traje...",
+      enableAll: "Activar todos",
+      disableAll: "Desactivar todos",
+      defaultsOnly: "Solo defaults",
+      selectCostume: "Seleccionar Traje",
+      history: "HISTORIAL",
+      historyHint: "Últimas 3 tiradas",
+      latest: "ÚLTIMA",
+      empty: "Vacío",
+      noRoll: "Sin tirada",
+      bannerDb: "My Hero Ultra Rumble Database — ultrarumble.com",
+      bannerYt: "Spider-Cris en YouTube",
+      footer1: 'Este sitio es un proyecto realizado por "Spider-Cris"',
+      footer2: "No está afiliado, asociado, autorizado ni respaldado por ultrarumble.com | Byking Inc. y/o Bandai Namco Entertainment Inc.",
+      footer3: "My Hero Ultra Rumble y todos los personajes, ilustraciones y marcas relacionadas son propiedad de sus respectivos titulares. Los datos e imágenes se muestran únicamente con fines informativos y de uso personal. Base de datos de referencia: ultrarumble.com.",
+    },
+  };
+  function T(key, vars) {
+    const pack = COPY[state && state.locale] || COPY.en;
+    let s = pack[key] || COPY.en[key] || key;
+    if (vars) for (const k of Object.keys(vars)) s = s.split("{" + k + "}").join(String(vars[k]));
+    return s;
+  }
   const SPIN_MS = 3000;
 
   let suspense = DATA.audio?.suspense ? new Audio(DATA.audio.suspense) : null;
@@ -658,7 +788,15 @@ h1.title {
     flash: 0,
     history: [],
     bounce: new Set(),
+    locale: (function () {
+      try {
+        const v = localStorage.getItem(LANG_KEY);
+        if (v === "en" || v === "es") return v;
+      } catch {}
+      return "en";
+    })(),
   };
+  try { document.documentElement.lang = state.locale; } catch {}
 
   function applyCharacter(c, withCostume) {
     state.character = c;
@@ -712,7 +850,7 @@ h1.title {
     state.spinPortrait = first;
     const randBtn = document.querySelector(".rand-main");
     if (randBtn) {
-      randBtn.textContent = "ROLLING...";
+      randBtn.textContent = T("rolling");
       randBtn.disabled = true;
     }
     paintReel(first);
@@ -825,12 +963,19 @@ h1.title {
 
     document.getElementById("app").innerHTML = `
 <section class="hero">
+  <div class="lang-bar">
+    <label class="sr">${T("langLabel")}</label>
+    <select class="lang-select" data-act="lang" aria-label="${T("langLabel")}">
+      <option value="en"${state.locale === "en" ? " selected" : ""}>English</option>
+      <option value="es"${state.locale === "es" ? " selected" : ""}>Español</option>
+    </select>
+  </div>
   <h1 class="title">MY ROULETTE ULTRA RUMBLE</h1>
   <div class="stage">
     <div class="hero-card panel-glow">
       <div class="hero-row">
-        <button class="pic-btn" data-act="clear-roles" title="Quitar filtros de rol" style="box-shadow:0 0 0 3px ${meta.hex},0 0 32px 8px ${meta.hex}99">
-          <span class="sr">Quitar filtros de rol</span>
+        <button class="pic-btn" data-act="clear-roles" title="${T("clearRoleFilters")}" style="box-shadow:0 0 0 3px ${meta.hex},0 0 32px 8px ${meta.hex}99">
+          <span class="sr">${T("clearRoleFilters")}</span>
           <div class="pic-frame" style="background:${meta.hex}">
             <img referrerpolicy="no-referrer" class="bg" src="${meta.bg}" alt="">
             <div class="${slamCls("character")}" style="position:absolute;inset:0">
@@ -852,13 +997,13 @@ h1.title {
             }).join("")}
           </div>
           <div class="rand-bar panel-glow">
-            <button class="rand-main" data-act="rand-char" ${state.spinning || !p.length ? "disabled" : ""}>${state.spinning ? "ROLLING..." : "RANDOM CHARACTER"}</button>
-            <button class="rand-chev" data-act="toggle-picker" title="Elegir personaje">${state.pickerOpen ? "▲" : "▼"}</button>
+            <button class="rand-main" data-act="rand-char" ${state.spinning || !p.length ? "disabled" : ""}>${state.spinning ? T("rolling") : T("randomCharacter")}</button>
+            <button class="rand-chev" data-act="toggle-picker" title="${T("pickCharacter")}">${state.pickerOpen ? "▲" : "▼"}</button>
             ${state.pickerOpen ? pickerMenu(p) : ""}
           </div>
           <div style="position:relative">
             <button class="roster-btn panel-glow" data-act="toggle-roster">
-              <span><b>ESTILOS DE COMBATE</b><em>${filtersOn ? `${p.length} en pool · ${enabledCount}/${CHARACTERS.length} activos` : `${enabledCount}/${CHARACTERS.length} estilos de combate`}</em></span>
+              <span><b>${T("combatStyles")}</b><em>${filtersOn ? T("poolCaptionFilter", { pool: p.length, enabled: enabledCount, total: CHARACTERS.length }) : T("poolCaption", { enabled: enabledCount, total: CHARACTERS.length })}</em></span>
               <span>${state.rosterOpen ? "▲" : "▼"}</span>
             </button>
             ${state.rosterOpen ? rosterMenu() : ""}
@@ -871,16 +1016,16 @@ h1.title {
       ${shown.style !== "Original" ? `<div class="st ${slamCls("character")}">${esc(shown.style.toUpperCase())}</div>` : ""}
     </div>
   </div>
-  <a class="hint scroll-hint" href="#loadout">LOADOUT<svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true"><path d="M1 1l8 8 8-8" stroke="currentColor" stroke-width="2"/></svg></a>
+  <a class="hint scroll-hint" href="#loadout">${T("loadoutHint")}<svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true"><path d="M1 1l8 8 8-8" stroke="currentColor" stroke-width="2"/></svg></a>
 </section>
 <section class="loadout" id="loadout">
   <div style="margin-bottom:1rem;display:flex;justify-content:flex-end">
-    <button class="mini panel-glow" data-act="rand-loadout" style="padding:0.75rem 1.25rem;font-size:1.05rem">RANDOM LOADOUT</button>
+    <button class="mini panel-glow" data-act="rand-loadout" style="padding:0.75rem 1.25rem;font-size:1.05rem">${T("randomLoadout")}</button>
   </div>
   <article class="article panel-glow">
     <div class="head">
-      <h3>HABILIDADES</h3>
-      <button class="mini" data-act="rand-skills">Random αβγ</button>
+      <h3>${T("skills")}</h3>
+      <button class="mini" data-act="rand-skills">${T("randomSkills")}</button>
     </div>
     <div class="skills">
       ${skillCard("α", "ALPHA", "alpha", 1)}
@@ -890,7 +1035,7 @@ h1.title {
   </article>
   <div class="split" id="tuning">
     <article class="article panel-glow">
-      <div class="head"><h3>TRAJE</h3><button class="mini" data-act="rand-costume">Random traje</button></div>
+      <div class="head"><h3>${T("costume")}</h3><button class="mini" data-act="rand-costume">${T("randomCostume")}</button></div>
       ${
         state.costume
           ? `<div class="cos-card ${slamCls("costume")}">
@@ -902,11 +1047,11 @@ h1.title {
           </div>
         </div>
       </div>`
-          : `<p class="muted">Sortea un personaje para asignar traje.</p>`
+          : `<p class="muted">${T("rollCharacterForCostume")}</p>`
       }
     </article>
     <article class="article panel-glow">
-      <div class="head"><h3>T.U.N.I.N.G.</h3><button class="mini" data-act="rand-tuning">Random tuning</button></div>
+      <div class="head"><h3>${T("tuning")}</h3><button class="mini" data-act="rand-tuning">${T("randomTuning")}</button></div>
       ${
         tuneCols.length
           ? `<div class="tune-grid ${slamCls("tuning")}">${tuneCols
@@ -919,7 +1064,7 @@ h1.title {
                     .map(
                       (slot, i) => `<div class="tune-slot" data-role="${slot.role}">
                     <span class="idx">${i + 1}</span>
-                    <div class="tn"><b>${esc(slot.skill?.name || "Sin configurar")}</b><span>Nv. 1${slot.side === "HERO" ? " · HÉROES" : slot.side === "VILLAIN" ? " · VILLANOS" : ""}</span></div>
+                    <div class="tn"><b>${esc(slot.skill?.name || T("unconfigured"))}</b><span>${slot.side === "HERO" ? T("lvHeroes") : slot.side === "VILLAIN" ? T("lvVillains") : T("lvPlain")}</span></div>
                     <img referrerpolicy="no-referrer" class="ico" src="${slot.skill ? slot.skill.icon : m.frame}" alt="">
                   </div>`,
                     )
@@ -927,23 +1072,23 @@ h1.title {
                 </div>`;
               })
               .join("")}</div>`
-          : `<p class="muted">Sin tunings para este traje.</p>`
+          : `<p class="muted">${T("rollCostumeForTuning")}</p>`
       }
     </article>
   </div>
   <article class="article panel-glow" style="margin-top:1rem">
-    <div class="head"><h3>DESAFÍO</h3><button class="mini" data-act="rand-chal">Random K.O. + daño</button></div>
+    <div class="head"><h3>${T("challenge")}</h3><button class="mini" data-act="rand-chal">${T("randomChallenge")}</button></div>
     <div class="chal">
       <div class="chal-box card-glow">
-        <div style="display:flex;justify-content:space-between;align-items:center"><span class="muted" style="letter-spacing:0.18em;font-weight:700;font-size:0.85rem">K.O. OBJETIVO</span><button class="mini" data-act="rand-ko" style="padding:0.3rem 0.5rem">⚄</button></div>
-        <div class="big ${slamCls("ko")}" data-act="edit-ko" title="Clic para escribir un número">${state.ko}</div>
-        <div class="faint" style="font-size:0.75rem">Bajas a conseguir · 1–12</div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span class="muted" style="letter-spacing:0.18em;font-weight:700;font-size:0.85rem">${T("koTarget")}</span><button class="mini" data-act="rand-ko" style="padding:0.3rem 0.5rem">⚄</button></div>
+        <div class="big ${slamCls("ko")}" data-act="edit-ko">${state.ko}</div>
+        <div class="faint" style="font-size:0.75rem">${T("koHint")}</div>
         <input class="skill-slider" type="range" min="1" max="12" value="${state.ko}" data-act="ko">
       </div>
       <div class="chal-box card-glow">
-        <div style="display:flex;justify-content:space-between;align-items:center"><span class="muted" style="letter-spacing:0.18em;font-weight:700;font-size:0.85rem">DAÑO MÍNIMO</span><button class="mini" data-act="rand-dmg" style="padding:0.3rem 0.5rem">⚄</button></div>
-        <div class="big ${slamCls("damage")}" data-act="edit-dmg" title="Clic para escribir un número">${state.damage.toLocaleString("en-US")}</div>
-        <div class="faint" style="font-size:0.75rem">Daño a infligir · 0–15,000</div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span class="muted" style="letter-spacing:0.18em;font-weight:700;font-size:0.85rem">${T("minDamage")}</span><button class="mini" data-act="rand-dmg" style="padding:0.3rem 0.5rem">⚄</button></div>
+        <div class="big ${slamCls("damage")}" data-act="edit-dmg">${state.damage.toLocaleString("en-US")}</div>
+        <div class="faint" style="font-size:0.75rem">${T("dmgHint")}</div>
         <input class="skill-slider" type="range" min="0" max="15000" step="1" value="${state.damage}" data-act="dmg">
       </div>
     </div>
@@ -951,10 +1096,10 @@ h1.title {
   <article class="article panel-glow" style="margin-top:1rem">
     <div class="head">
       <div>
-        <h3>COLECCIÓN DE TRAJES</h3>
-        <p class="muted" style="margin:0.35rem 0 0;font-size:0.85rem;max-width:40rem">Marca solo los cosméticos que tienes. El randomizer no sorteará trajes desactivados.</p>
+        <h3>${T("collection")}</h3>
+        <p class="muted" style="margin:0.35rem 0 0;font-size:0.85rem;max-width:40rem">${T("collectionHint")}</p>
       </div>
-      <div class="muted" style="font-weight:800;letter-spacing:0.06em">${ownedN}/${allCos.length} activos</div>
+      <div class="muted" style="font-weight:800;letter-spacing:0.06em">${T("enabledCount", { enabled: ownedN, total: allCos.length })}</div>
     </div>
     <div class="strip">
       ${originals
@@ -970,12 +1115,12 @@ h1.title {
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;margin-bottom:0.75rem">
       <div style="flex:1;font-size:1.25rem;font-weight:900">${esc(selected.name)}</div>
-      <input class="search" style="border:1px solid var(--border);border-radius:0.4rem;background:var(--panel-3);padding:0 0.75rem;height:2.5rem;min-width:12rem" placeholder="Buscar traje..." value="${esc(state.colQ)}" data-act="col-q">
+      <input class="search" style="border:1px solid var(--border);border-radius:0.4rem;background:var(--panel-3);padding:0 0.75rem;height:2.5rem;min-width:12rem" placeholder="${T("searchCostume")}" value="${esc(state.colQ)}" data-act="col-q">
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem">
-      <button class="chip" data-act="cos-bulk" data-mode="all">Activar todos</button>
-      <button class="chip" data-act="cos-bulk" data-mode="none">Desactivar todos</button>
-      <button class="chip" data-act="cos-bulk" data-mode="defaults">Solo defaults</button>
+      <button class="chip" data-act="cos-bulk" data-mode="all">${T("enableAll")}</button>
+      <button class="chip" data-act="cos-bulk" data-mode="none">${T("disableAll")}</button>
+      <button class="chip" data-act="cos-bulk" data-mode="defaults">${T("defaultsOnly")}</button>
     </div>
     <div class="grid-cos">
       ${cosList
@@ -985,7 +1130,7 @@ h1.title {
           return `<div class="tile ${active ? "active" : ""} ${owned ? "" : "off"}">
             <div class="art">
               <button style="width:100%;height:100%;padding:0" data-act="cos-own" data-id="${cos.id}"><img referrerpolicy="no-referrer" src="${cos.image}" alt="${esc(cos.name)}" loading="lazy"></button>
-              <button class="pick-cos" data-act="cos-sel" data-id="${cos.id}">Seleccionar Traje</button>
+              <button class="pick-cos" data-act="cos-sel" data-id="${cos.id}">${T("selectCostume")}</button>
             </div>
             <button class="cap" data-act="cos-own" data-id="${cos.id}">
               <p style="margin:0;font-size:0.75rem;font-weight:700;line-height:1.2">${esc(cos.name)}</p>
@@ -997,17 +1142,17 @@ h1.title {
     </div>
   </article>
   ${historyBlock()}
-  <a class="banner panel-glow" href="https://ultrarumble.com" target="_blank" rel="noopener noreferrer" title="My Hero Ultra Rumble Database — ultrarumble.com">
+  <a class="banner panel-glow" href="https://ultrarumble.com" target="_blank" rel="noopener noreferrer" title="${T("bannerDb")}">
     <span><img referrerpolicy="no-referrer" src="${DATA.banners?.ur || "/ultrarumble-banner.png"}" alt="My Hero Ultra Rumble Database"></span>
   </a>
-  <a class="banner panel-glow" href="https://www.youtube.com/@Spider-Cris7" target="_blank" rel="noopener noreferrer" title="Spider-Cris en YouTube">
+  <a class="banner panel-glow" href="https://www.youtube.com/@Spider-Cris7" target="_blank" rel="noopener noreferrer" title="${T("bannerYt")}">
     <span><img referrerpolicy="no-referrer" src="${DATA.banners?.yt || "/spider-cris-banner.png"}" alt="Spider-Cris — The Oppai Lover"></span>
   </a>
 </section>
 <footer class="foot">
-  <p>Este sitio es un proyecto realizado por "Spider-Cris"</p>
-  <p>No está afiliado, asociado, autorizado ni respaldado por <a href="https://ultrarumble.com" target="_blank" rel="noreferrer">ultrarumble.com</a> | Byking Inc. y/o Bandai Namco Entertainment Inc.</p>
-  <p>My Hero Ultra Rumble y todos los personajes, ilustraciones y marcas relacionadas son propiedad de sus respectivos titulares. Los datos e imágenes se muestran únicamente con fines informativos y de uso personal. Base de datos de referencia: <a href="https://ultrarumble.com" target="_blank" rel="noreferrer">ultrarumble.com</a>.</p>
+  <p>${T("footer1")}</p>
+  <p>${T("footer2").replace("ultrarumble.com", '<a href="https://ultrarumble.com" target="_blank" rel="noreferrer">ultrarumble.com</a>')}</p>
+  <p>${T("footer3").replace("ultrarumble.com", '<a href="https://ultrarumble.com" target="_blank" rel="noreferrer">ultrarumble.com</a>')}</p>
 </footer>`;
     state.bounce.clear();
   }
@@ -1017,8 +1162,8 @@ h1.title {
     return `<article class="article panel-glow" style="margin-top:1rem">
       <div class="head">
         <div>
-          <h3>HISTORIAL</h3>
-          <p class="muted" style="margin:0.35rem 0 0;font-size:0.85rem">Últimas 3 tiradas</p>
+          <h3>${T("history")}</h3>
+          <p class="muted" style="margin:0.35rem 0 0;font-size:0.85rem">${T("historyHint")}</p>
         </div>
         <div class="muted" style="font-weight:800;letter-spacing:0.06em">${state.history.length}/3</div>
       </div>
@@ -1028,14 +1173,14 @@ h1.title {
             if (!c) {
               return `<div class="hist-empty">
                 <div class="hist-pic empty"><span>—</span></div>
-                <div class="hist-cap"><b>Vacío</b><span>Sin tirada</span></div>
+                <div class="hist-cap"><b>${T("empty")}</b><span>${T("noRoll")}</span></div>
               </div>`;
             }
             const fit = portraitFrame(c);
             const rm = ROLE_META[c.role];
             const on = c.id === state.character.id;
             return `<button class="hist-card card-glow ${on ? "on" : ""} ${i === 0 ? slamCls("history") : ""}" data-act="hist" data-id="${c.id}" title="Cargar ${esc(c.name)}">
-              ${i === 0 ? `<span class="hist-tag">ÚLTIMA</span>` : ""}
+              ${i === 0 ? `<span class="hist-tag">${T("latest")}</span>` : ""}
               <div class="hist-pic">
                 <img referrerpolicy="no-referrer" class="bg" src="${rm.bg}" alt="">
                 <div class="pic-zoom" style="inset:0;transform:scale(${fit.scale});transform-origin:${fit.origin}">
@@ -1076,7 +1221,7 @@ h1.title {
         )
       : list;
     return `<div class="menu panel-glow" id="picker-menu">
-      <div class="search">🔍 <input id="picker-q" placeholder="Buscar personaje..." value="${esc(state.pickerQ)}"></div>
+      <div class="search">🔍 <input id="picker-q" placeholder="${T("searchCharacter")}" value="${esc(state.pickerQ)}"></div>
       <div class="list" role="listbox">
         ${
           rows.length
@@ -1090,7 +1235,7 @@ h1.title {
             </button>`;
                 })
                 .join("")
-            : `<div class="muted" style="padding:1rem;text-align:center">Sin resultados</div>`
+            : `<div class="muted" style="padding:1rem;text-align:center">${T("noResults")}</div>`
         }
       </div>
     </div>`;
@@ -1107,12 +1252,12 @@ h1.title {
       : CHARACTERS;
     return `<div class="menu menu-wide panel-glow" id="roster-menu">
       <div class="chips">
-        <button class="chip" data-act="bulk" data-mode="all">Todos</button>
-        <button class="chip" data-act="bulk" data-mode="originals">Originales</button>
-        <button class="chip" data-act="bulk" data-mode="quirks">Quirk sets</button>
-        <button class="chip" data-act="bulk" data-mode="none">Solo actual</button>
+        <button class="chip" data-act="bulk" data-mode="all">${T("bulkAll")}</button>
+        <button class="chip" data-act="bulk" data-mode="originals">${T("bulkOriginals")}</button>
+        <button class="chip" data-act="bulk" data-mode="quirks">${T("bulkQuirks")}</button>
+        <button class="chip" data-act="bulk" data-mode="none">${T("bulkCurrent")}</button>
       </div>
-      <div class="search">🔍 <input id="roster-q" placeholder="Buscar estilo o quirk set..." value="${esc(state.rosterQ)}"></div>
+      <div class="search">🔍 <input id="roster-q" placeholder="${T("searchStyle")}" value="${esc(state.rosterQ)}"></div>
       <div class="list" style="max-height:20rem">
         ${rows
           .map((c) => {
@@ -1120,7 +1265,7 @@ h1.title {
             const rm = ROLE_META[c.role];
             return `<button class="row ${on ? "" : "off-row"}" data-act="style-toggle" data-id="${c.id}">
               <span class="th"><img referrerpolicy="no-referrer" src="${rm.bg}" style="object-fit:cover"><img referrerpolicy="no-referrer" src="${c.face}" alt=""></span>
-              <span class="meta"><b>${esc(c.name)}</b><span>${c.style === "Original" ? "Original" : "Quirk set · " + esc(c.style)} · ${c.role}</span></span>
+              <span class="meta"><b>${esc(c.name)}</b><span>${c.style === "Original" ? "Original" : T("quirkSet") + " · " + esc(c.style)} · ${c.role}</span></span>
               <span class="check ${on ? "on" : ""}">${on ? "✓" : ""}</span>
             </button>`;
           })
@@ -1132,7 +1277,7 @@ h1.title {
   function bind() {
     const app = document.getElementById("app");
     app.onclick = (e) => {
-      if (e.target && e.target.matches && e.target.matches("input[type=range], input[type=range] *")) return;
+      if (e.target && e.target.matches && e.target.matches("input[type=range], input[type=range] *, select, select *")) return;
       const btn = e.target.closest("[data-act]");
       if (!btn) {
         if (!e.target.closest(".menu") && !e.target.closest("[data-act='toggle-picker']") && !e.target.closest("[data-act='toggle-roster']")) {
@@ -1265,6 +1410,16 @@ h1.title {
         writeSet(COST_KEY, next);
       } else return;
       if (act !== "rand-char") render();
+    };
+    app.onchange = (e) => {
+      const el = e.target;
+      if (el && el.dataset && el.dataset.act === "lang") {
+        const next = el.value === "es" ? "es" : "en";
+        state.locale = next;
+        try { localStorage.setItem(LANG_KEY, next); } catch {}
+        document.documentElement.lang = next;
+        render();
+      }
     };
     app.oninput = (e) => {
       const el = e.target;
