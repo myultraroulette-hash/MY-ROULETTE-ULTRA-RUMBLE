@@ -1,7 +1,7 @@
 # My Roulette Ultra Rumble
 
-Randomizador fan de My Hero Ultra Rumble, hecho por **Spider-Cris**.
+Fan-Made Randomizador for My Hero Ultra Rumble
 
-Sitio: https://myultraroulette-hash.github.io/
+https://myultraroulette-hash.github.io/
 
-No está afiliado a ultrarumble.com, Byking Inc. ni Bandai Namco Entertainment Inc.
+Not affiliated, associated, authorized, or endorsed with ultrarumble.com | Byking Inc. and/or Bandai Namco Entertainment Inc.
